@@ -25,7 +25,7 @@
 | `<iso646.h>`   | ➖              | ✅            |
 | `<limits.h>`   | ➖              | ✅            |
 | `<locale.h>`   | 🚫             | 🚫           |
-| `<math.h>`     | 🚫             | 🚫           |
+| `<math.h>`     | 🚫             | ⚠️           |
 | `<setjmp.h>`   | 🚫             | 🚫           |
 | `<signal.h>`   | 🚫             | 🚫           |
 | `<stdarg.h>`   | ✅              | ➖            |
