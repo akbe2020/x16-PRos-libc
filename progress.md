@@ -21,7 +21,7 @@
 | `<errno.h>`    | 🚫             | 🚫           |
 | `<fenv.h>`     | 🚫             | 🚫           |
 | `<float.h>`    | ➖              | ✅            |
-| `<inttypes.h>` | 🚫             | 🚫           |
+| `<inttypes.h>` | ⚠️ **(2/6)**   | ⚠️           |
 | `<iso646.h>`   | ➖              | ✅            |
 | `<limits.h>`   | ➖              | ✅            |
 | `<locale.h>`   | 🚫             | 🚫           |
