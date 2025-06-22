@@ -4,6 +4,20 @@
 typedef float float_t;
 typedef double double_t;
 
+#define M_E 2.71828182845904523536
+#define M_LOG2E 1.44269504088896340736
+#define M_LOG10E 0.434294481903251827651
+#define M_LN2 0.693147180559945309417
+#define M_LN10 2.30258509299404568402
+#define M_PI 3.14159265358979323846
+#define M_PI_2 1.57079632679489661923
+#define M_PI_4 0.785398163397448309616
+#define M_1_PI 0.318309886183790671538
+#define M_2_PI 0.636619772367581343076
+#define M_2_SQRTPI 1.12837916709551257390
+#define M_SQRT2 1.41421356237309504880
+#define M_SQRT1_2 0.707106781186547524401
+
 #define NAN __builtin_nanf("")
 #define INFINITY __builtin_inff()
 
@@ -28,9 +42,9 @@ typedef double double_t;
 // #define FP_INFINITE not defined
 // #define FP_NAN not defined
 
-// float fabsf(float arg);
-// double fabs(double arg);
-// long double fabsl(long double arg);
+float fabsf(float arg);
+double fabs(double arg);
+long double fabsl(long double arg);
 
 // float fmodf(float x, float y);
 // double fmod(double x, double y);
@@ -96,9 +110,9 @@ typedef double double_t;
 // double pow(double x, double y);
 // long double powl(long double x, long double y);
 
-// float sqrtf(float arg);
-// double sqrt(double arg);
-// long double sqrtl(long double arg);
+float sqrtf(float arg);
+double sqrt(double arg);
+long double sqrtl(long double arg);
 
 // float cbrtf(float arg);
 // double cbrt(double arg);
@@ -108,33 +122,33 @@ typedef double double_t;
 // double hypot(double x, double y);
 // long double hypotl(long double x, long double y);
 
-// float sinf(float arg);
-// double sin(double arg);
-// long double sinl(long double arg);
+float sinf(float arg);
+double sin(double arg);
+long double sinl(long double arg);
 
-// float cosf(float arg);
-// double cos(double arg);
-// long double cosl(long double arg);
+float cosf(float arg);
+double cos(double arg);
+long double cosl(long double arg);
 
-// float tanf(float arg);
-// double tan(double arg);
-// long double tanl(long double arg);
+float tanf(float arg);
+double tan(double arg);
+long double tanl(long double arg);
 
-// float asinf(float arg);
-// double asin(double arg);
-// long double asinl(long double arg);
+float asinf(float arg);
+double asin(double arg);
+long double asinl(long double arg);
 
-// float acosf(float arg);
-// double acos(double arg);
-// long double acosl(long double arg);
+float acosf(float arg);
+double acos(double arg);
+long double acosl(long double arg);
 
-// float atanf(float arg);
-// double atan(double arg);
-// long double atanl(long double arg);
+float atanf(float arg);
+double atan(double arg);
+long double atanl(long double arg);
 
-// float atan2f(float x, float y);
-// double atan2(double x, double y);
-// long double atan2l(long double x, long double y);
+float atan2f(float x, float y);
+double atan2(double x, double y);
+long double atan2l(long double x, long double y);
 
 // float sinhf(float arg);
 // double sinh(double arg);
