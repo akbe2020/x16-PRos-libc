@@ -90,21 +90,21 @@ long double fabsl(long double arg);
 // double expm1(double arg);
 // long double expm1l(long double arg);
 
-// float logf(float arg);
-// double log(double arg);
-// long double logl(long double arg);
+float logf(float arg);
+double log(double arg);
+long double logl(long double arg);
 
-// float log10f(float arg);
-// double log10(double arg);
-// long double log10l(long double arg);
+float log10f(float arg);
+double log10(double arg);
+long double log10l(long double arg);
 
-// float log2f(float arg);
-// double log2(double arg);
-// long double log2l(long double arg);
+float log2f(float arg);
+double log2(double arg);
+long double log2l(long double arg);
 
-// float log1pf(float arg);
-// double log1p(double arg);
-// long double log1pl(long double arg);
+float log1pf(float arg);
+double log1p(double arg);
+long double log1pl(long double arg);
 
 // float powf(float x, float y);
 // double pow(double x, double y);

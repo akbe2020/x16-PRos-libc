@@ -1,5 +1,93 @@
 #include <math.h>
 
+// helper functions:
+
+float _fyl2xf(float x, float y) {
+    float result;
+    __asm__ __volatile__ (
+        "flds %1\n"
+        "flds %2\n"
+        "fyl2x\n"
+        "fstps %0\n"
+        : "=m" (result)
+        : "m" (y), "m" (x)
+        : "st"
+    );
+    return result;
+}
+
+double _fyl2x(double x, double y) {
+    double result;
+    __asm__ __volatile__ (
+        "fldl %1\n"
+        "fldl %2\n"
+        "fyl2x\n"
+        "fstpl %0\n"
+        : "=m" (result)
+        : "m" (y), "m" (x)
+        : "st"
+    );
+    return result;
+}
+
+long double _fyl2xl(long double x, long double y) {
+    long double result;
+    __asm__ __volatile__ (
+        "fldt %1\n"
+        "fldt %2\n"
+        "fyl2x\n"
+        "fstpt %0\n"
+        : "=m" (result)
+        : "m" (y), "m" (x)
+        : "st"
+    );
+    return result;
+}
+
+float _fyl2xp1f(float x, float y) {
+    float result;
+    __asm__ __volatile__ (
+        "flds %1\n"
+        "flds %2\n"
+        "fyl2xp1\n"
+        "fstps %0\n"
+        : "=m" (result)
+        : "m" (y), "m" (x)
+        : "st"
+    );
+    return result;
+}
+
+double _fyl2xp1(double x, double y) {
+    double result;
+    __asm__ __volatile__ (
+        "fldl %1\n"
+        "fldl %2\n"
+        "fyl2xp1\n"
+        "fstpl %0\n"
+        : "=m" (result)
+        : "m" (y), "m" (x)
+        : "st"
+    );
+    return result;
+}
+
+long double _fyl2xp1l(long double x, long double y) {
+    long double result;
+    __asm__ __volatile__ (
+        "fldt %1\n"
+        "fldt %2\n"
+        "fyl2xp1\n"
+        "fstpt %0\n"
+        : "=m" (result)
+        : "m" (y), "m" (x)
+        : "st"
+    );
+    return result;
+}
+
+// end of helper functions
+
 float fabsf(float arg) {
     float result;
     __asm__ __volatile__ (
@@ -34,6 +122,53 @@ long double fabsl(long double arg) {
         : "m" (arg)
     );
     return result;
+}
+
+float logf(const float arg) {
+    return _fyl2xf(arg, 1.0f / log2f(M_E));
+}
+
+double log(const double arg) {
+    return _fyl2x(arg, 1.0 / log2(M_E));
+}
+long double logl(const long double arg) {
+    return _fyl2xl(arg, 1.0L / log2l(M_E));
+}
+
+float log10f(const float arg) {
+    return _fyl2xf(arg, 1.0f / log2f(10.0f));
+}
+
+double log10(const double arg) {
+    return _fyl2x(arg, 1.0 / log2(10.0));
+}
+
+long double log10l(const long double arg) {
+    return _fyl2xl(arg, 1.0L / log2l(10.0L));
+}
+
+float log2f(const float arg) {
+    return _fyl2xf(arg, 1.0f);
+}
+
+double log2(const double arg) {
+    return _fyl2x(arg, 1.0);
+}
+
+long double log2l(const long double arg) {
+    return _fyl2xl(arg, 1.0L);
+}
+
+float log1pf(const float arg) {
+    return _fyl2xp1f(arg, 1.0f);
+}
+
+double log1p(const double arg) {
+    return _fyl2xp1(arg, 1.0);
+}
+
+long double log1pl(const long double arg) {
+    return _fyl2xp1l(arg, 1.0L);
 }
 
 float sqrtf(float arg) {
