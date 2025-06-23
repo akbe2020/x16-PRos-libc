@@ -190,21 +190,21 @@ long double atan2l(long double x, long double y);
 // double lgamma(double arg);
 // long double lgammal(long double arg);
 
-// float ceilf(float arg);
-// double ceil(double arg);
-// long double ceill(long double arg);
+float ceilf(float arg);
+double ceil(double arg);
+long double ceill(long double arg);
 
-// float floorf(float arg);
-// double floor(double arg);
-// long double floorl(long double arg);
+float floorf(float arg);
+double floor(double arg);
+long double floorl(long double arg);
 
-// float truncf(float arg);
-// double trund(double arg);
-// long double trunl(long double arg);
+float truncf(float arg);
+double trunc(double arg);
+long double truncl(long double arg);
 
-// float roundf(float arg);
-// double round(double arg);
-// long double roundl(long double arg);
+float roundf(float arg);
+double round(double arg);
+long double roundl(long double arg);
 
 // long lroundf(float arg);
 // long lround(double arg);

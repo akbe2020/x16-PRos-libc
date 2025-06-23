@@ -86,6 +86,121 @@ long double _fyl2xp1l(long double x, long double y) {
     return result;
 }
 
+// Rounding modes:
+// 0x0000 - to nearest, tie to even
+// 0x0400 - down
+// 0x0800 - up
+// 0x0c00 - truncate (toward 0)
+// other values will lead to undefined behavior
+
+float _round_using_modef(float arg, unsigned short mode) {
+    float result;
+    unsigned short original_cw, modified_cw;
+
+    __asm__ __volatile__ (
+        "fstcw %0\n"
+        : "=m" (original_cw)
+    );
+
+    modified_cw = original_cw;
+    modified_cw &= ~0x0c00;
+    modified_cw |= mode;
+
+    __asm__ __volatile__ (
+        "fldcw %0\n"
+        :
+        : "m" (modified_cw)
+    );
+
+    __asm__ __volatile__ (
+        "flds %1\n"
+        "frndint\n"
+        "fstps %0\n"
+        : "=m" (result)
+        : "m" (arg)
+    );
+
+    __asm__ __volatile__ (
+        "fldcw %0"
+        :
+        : "m" (original_cw)
+    );
+
+    return result;
+}
+
+double _round_using_mode(double arg, unsigned short mode) {
+    double result;
+    unsigned short original_cw, modified_cw;
+
+    __asm__ __volatile__ (
+        "fstcw %0\n"
+        : "=m" (original_cw)
+    );
+
+    modified_cw = original_cw;
+    modified_cw &= ~0x0c00;
+    modified_cw |= mode;
+
+    __asm__ __volatile__ (
+        "fldcw %0\n"
+        :
+        : "m" (modified_cw)
+    );
+
+    __asm__ __volatile__ (
+        "fldl %1\n"
+        "frndint\n"
+        "fstpl %0\n"
+        : "=m" (result)
+        : "m" (arg)
+    );
+
+    __asm__ __volatile__ (
+        "fldcw %0"
+        :
+        : "m" (original_cw)
+    );
+
+    return result;
+}
+
+long double _round_using_model(long double arg, unsigned short mode) {
+    long double result;
+    unsigned short original_cw, modified_cw;
+
+    __asm__ __volatile__ (
+        "fstcw %0\n"
+        : "=m" (original_cw)
+    );
+
+    modified_cw = original_cw;
+    modified_cw &= ~0x0c00;
+    modified_cw |= mode;
+
+    __asm__ __volatile__ (
+        "fldcw %0\n"
+        :
+        : "m" (modified_cw)
+    );
+
+    __asm__ __volatile__ (
+        "fldt %1\n"
+        "frndint\n"
+        "fstpt %0\n"
+        : "=m" (result)
+        : "m" (arg)
+    );
+
+    __asm__ __volatile__ (
+        "fldcw %0"
+        :
+        : "m" (original_cw)
+    );
+
+    return result;
+}
+
 // end of helper functions
 
 float fabsf(float arg) {
@@ -400,4 +515,52 @@ long double atan2l(long double x, long double y) {
         : "st"
     );
     return result;
+}
+
+float ceilf(const float arg) {
+    return _round_using_modef(arg, 0x0800);
+};
+
+double ceil(const double arg) {
+    return _round_using_mode(arg, 0x0800);
+};
+
+long double ceill(const long double arg) {
+    return _round_using_model(arg, 0x0800);
+};
+
+float floorf(const float arg) {
+    return _round_using_modef(arg, 0x0400);
+}
+
+double floor(const double arg) {
+    return _round_using_mode(arg, 0x0400);
+}
+
+long double floorl(const long double arg) {
+    return _round_using_model(arg, 0x0400);
+}
+
+float truncf(const float arg) {
+    return _round_using_modef(arg, 0x0c00);
+}
+
+double trunc(const double arg) {
+    return _round_using_mode(arg, 0x0c00);
+}
+
+long double truncl(const long double arg) {
+    return _round_using_model(arg, 0x0c00);
+}
+
+float roundf(const float arg) {
+    return _round_using_modef(arg, 0x0000);
+}
+
+double round(const double arg) {
+    return _round_using_mode(arg, 0x0000);
+}
+
+long double roundl(const long double arg) {
+    return (long) _round_using_model(arg, 0x0000);
 }
