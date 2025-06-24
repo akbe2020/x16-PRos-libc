@@ -201,6 +201,84 @@ long double _round_using_model(long double arg, unsigned short mode) {
     return result;
 }
 
+float _f2xm1f(float arg) {
+    float result;
+    __asm__ __volatile__ (
+        "flds %1\n"
+        "f2xm1\n"
+        "fstps %0\n"
+        : "=m" (result)
+        : "m" (arg)
+    );
+    return result;
+}
+
+double _f2xm1(double arg) {
+    double result;
+    __asm__ __volatile__ (
+        "fldl %1\n"
+        "f2xm1\n"
+        "fstpl %0\n"
+        : "=m" (result)
+        : "m" (arg)
+    );
+    return result;
+}
+
+long double _f2xm1l(long double arg) {
+    long double result;
+    __asm__ __volatile__ (
+        "fldt %1\n"
+        "f2xm1\n"
+        "fstpt %0\n"
+        : "=m" (result)
+        : "m" (arg)
+    );
+    return result;
+}
+
+float _fscalef(float x, float y) {
+    float result;
+    __asm__ __volatile__ (
+        "flds %1\n"
+        "flds %2\n"
+        "fscale\n"
+        "fstps %0\n"
+        "fstp %%st(0)\n"
+        : "=m" (result)
+        : "m" (x), "m" (y)
+    );
+    return result;
+}
+
+double _fscale(double x, double y) {
+    double result;
+    __asm__ __volatile__ (
+        "fldl %1\n"
+        "fldl %2\n"
+        "fscale\n"
+        "fstpl %0\n"
+        "fstp %%st(0)\n"
+        : "=m" (result)
+        : "m" (x), "m" (y)
+    );
+    return result;
+}
+
+long double _fscalel(long double x, long double y) {
+    long double result;
+    __asm__ __volatile__ (
+        "fldt %1\n"
+        "fldt %2\n"
+        "fscale\n"
+        "fstpt %0\n"
+        "fstp %%st(0)\n"
+        : "=m" (result)
+        : "m" (x), "m" (y)
+    );
+    return result;
+}
+
 // end of helper functions
 
 float fabsf(float arg) {
@@ -237,6 +315,57 @@ long double fabsl(long double arg) {
         : "m" (arg)
     );
     return result;
+}
+
+float fmodf(const float x, const float y) {
+    return x - roundf(x / y) * y;
+}
+
+double fmod(const double x, const double y) {
+    return x - round(x / y) * y;
+}
+
+long double fmodl(long const double x, const long double y) {
+    return x - roundl(x / y) * y;
+}
+
+float remainderf(const float x, const float y) {
+    return x - truncf(x / y) * y;
+}
+
+double remainder(const double x, const double y) {
+    return x - trunc(x / y) * y;
+}
+
+long double remainderl(const long double x, const long double y) {
+    return x - truncl(x / y) * y;
+}
+
+float expf(const float arg) {
+    return exp2f(arg / (float) M_LN2);
+}
+
+double exp(const double arg) {
+    return exp2(arg / M_LN2);
+}
+
+long double expl(const long double arg) {
+    return exp2l(arg / (long double) M_LN2);
+}
+
+float exp2f(const float arg) {
+    const float n = floorf(arg);
+    return _fscalef(n, 1.0f) * (_f2xm1f(arg - n) + 1.0f);
+}
+
+double exp2(const double arg) {
+    const double n = floor(arg);
+    return _fscale(n, 1.0) * (_f2xm1(arg - n) + 1.0);
+}
+
+long double exp2l(const long double arg) {
+    const long double n = floorl(arg);
+    return _fscalel(n, 1.0L) * (_f2xm1l(arg - n) + 1.0L);
 }
 
 float logf(const float arg) {
@@ -286,6 +415,66 @@ long double log1pl(const long double arg) {
     return _fyl2xp1l(arg, 1.0L);
 }
 
+float powf(const float x, const float y) {
+    if (x == 0.0f) {
+        return 1.0f;
+    }
+
+    float sign = 1.0f;
+
+    if (x < 0.0f) {
+        if (y != floorf(y)) {
+            return NAN;
+        }
+
+        if (fmodf(y, 2.0f) != 0.0f) {
+            sign = -1.0f;
+        }
+    }
+
+    return sign * exp2f(y * log2f(fabsf(x)));
+}
+
+double pow(const double x, const double y) {
+    if (x == 0.0) {
+        return 1.0;
+    }
+
+    double sign = 1.0;
+
+    if (x < 0.0) {
+        if (y != floor(y)) {
+            return NAN;
+        }
+
+        if (fmod(y, 2.0) != 0.0) {
+            sign = -1.0;
+        }
+    }
+
+    return sign * exp2(y * log2(fabs(x)));
+}
+
+long double powl(const long double x, const long double y) {
+    if (x == 0.0L) {
+        return 1.0L;
+    }
+
+    long double sign = 1.0L;
+
+    if (x < 0.0L) {
+        if (y != floorl(y)) {
+            return NAN;
+        }
+
+        if (fmodl(y, 2.0L) != 0.0L) {
+            sign = -1.0;
+        }
+    }
+
+    return sign * exp2l(y * log2l(fabsl(x)));
+}
+
 float sqrtf(float arg) {
     float result;
     __asm__ __volatile__ (
@@ -320,6 +509,30 @@ long double sqrtl(long double arg) {
         : "m" (arg)
     );
     return result;
+}
+
+float cbrtf(const float arg) {
+    return powf(arg, 1.0f / 3.0f);
+}
+
+double cbrt(const double arg) {
+    return pow(arg, 1.0 / 3.0);
+}
+
+long double cbrtl(const long double arg) {
+    return powl(arg, 1.0L / 3.0L);
+}
+
+float hypotf(const float x, const float y) {
+    return sqrtf(x * x + y * y);
+}
+
+double hypot(const double x, const double y) {
+    return sqrt(x * x + y * y);
+}
+
+long double hypotl(const long double x, const long double y) {
+    return sqrtl(x * x + y * y);
 }
 
 float sinf(float arg) {

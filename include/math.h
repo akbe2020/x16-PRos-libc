@@ -46,13 +46,13 @@ float fabsf(float arg);
 double fabs(double arg);
 long double fabsl(long double arg);
 
-// float fmodf(float x, float y);
-// double fmod(double x, double y);
-// long double fmodl(long double x, long double y);
+float fmodf(float x, float y);
+double fmod(double x, double y);
+long double fmodl(long double x, long double y);
 
-// float remainderf(float x, float y);
-// double remainder(double x, double y);
-// float remainderl(long double x, long double y);
+float remainderf(float x, float y);
+double remainder(double x, double y);
+long double remainderl(long double x, long double y);
 
 // float remquof(float x, float y, int *quo);
 // double remquo(double, double, int *quo);
@@ -78,13 +78,13 @@ long double fabsl(long double arg);
 // double nan(const char *arg);
 // long double nanl(const char *arg);
 
-// float expf(float arg);
-// double exp(double arg);
-// long double expl(long double arg);
+float expf(float arg);
+double exp(double arg);
+long double expl(long double arg);
 
-// float exp2f(float arg);
-// double exp2(double arg);
-// long double exp2l(long double arg);
+float exp2f(float arg);
+double exp2(double arg);
+long double exp2l(long double arg);
 
 // float expm1f(float arg);
 // double expm1(double arg);
@@ -106,21 +106,21 @@ float log1pf(float arg);
 double log1p(double arg);
 long double log1pl(long double arg);
 
-// float powf(float x, float y);
-// double pow(double x, double y);
-// long double powl(long double x, long double y);
+float powf(float x, float y);
+double pow(double x, double y);
+long double powl(long double x, long double y);
 
 float sqrtf(float arg);
 double sqrt(double arg);
 long double sqrtl(long double arg);
 
-// float cbrtf(float arg);
-// double cbrt(double arg);
-// long double cbrtl(long double arg);
+float cbrtf(float arg);
+double cbrt(double arg);
+long double cbrtl(long double arg);
 
-// float hypotf(float x, float y);
-// double hypot(double x, double y);
-// long double hypotl(long double x, long double y);
+float hypotf(float x, float y);
+double hypot(double x, double y);
+long double hypotl(long double x, long double y);
 
 float sinf(float arg);
 double sin(double arg);
